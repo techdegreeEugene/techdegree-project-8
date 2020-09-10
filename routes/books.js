@@ -8,7 +8,7 @@ function asyncHandler(cb){
     try {
       await cb(req, res, next)
     } catch(error){
-      res.status(500).send(error);
+      next(error);
     }
   }
 }
@@ -54,11 +54,7 @@ router.get("/:id/edit", asyncHandler(async(req, res) => {
 /* GET individual article. */
 router.get("/:id", asyncHandler(async (req, res) => {
   const book = await Book.findByPk(req.params.id);
-  if(book) {
-    res.render("update-book", { book, title: book.title });  
-  } else {
-    res.sendStatus(404);
-  }
+  res.render("update-book", { book, title: book.title }); 
 })); 
 
 /* Update an book. */
