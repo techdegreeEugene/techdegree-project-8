@@ -31,6 +31,8 @@ app.use( (req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
+	err.status = err.status || 500;
+	err.message = err.message || 'Oops, there was an error on the server';
 	res.locals.error = err;
 	res.status(err.status);
 	if(err.status === 404) {
